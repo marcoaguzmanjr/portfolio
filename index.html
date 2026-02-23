@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marco A. Guzman, Jr. — Engineering Leader</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #f8f6f3;
+    --warm: #e8e4de;
+    --accent: #b8562a;
+    --accent-light: #d4885f;
+    --muted: #8a8580;
+    --light-line: rgba(26,26,26,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(248,246,243,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--light-line);
+    transition: padding 0.3s ease;
+  }
+
+  nav.scrolled { padding: 1rem 3rem; }
+
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 2.5rem; }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .hero-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero h1 .highlight {
+    color: var(--accent);
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero-desc {
+    font-size: 1.2rem;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-cta {
+    margin-top: 3rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 2rem;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 2rem;
+    background: transparent;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.2s forwards;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 7rem 3rem;
+  }
+
+  .section-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 3rem;
+  }
+
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+    margin-bottom: 3rem;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: white; }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    margin-bottom: 1.25rem;
+    color: var(--ink);
+    font-size: 1.05rem;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .stat {
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--light-line);
+  }
+
+  .stat-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+  }
+
+  /* ── EXPERTISE ── */
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--light-line);
+    border: 1px solid var(--light-line);
+  }
+
+  .expertise-card {
+    background: var(--paper);
+    padding: 2.5rem;
+    transition: all 0.4s ease;
+    position: relative;
+    cursor: default;
+  }
+
+  .expertise-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.4s ease;
+  }
+
+  .expertise-card:hover::before { width: 100%; }
+  .expertise-card:hover { background: white; }
+
+  .expertise-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+    opacity: 0.6;
+  }
+
+  .expertise-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .expertise-card p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .expertise-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--warm);
+    color: var(--muted);
+    border-radius: 1px;
+    transition: all 0.3s ease;
+  }
+
+  .expertise-card:hover .tag {
+    border-color: var(--accent-light);
+    color: var(--accent);
+  }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: white; }
+
+  .timeline { position: relative; }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--light-line);
+    transition: all 0.3s ease;
+  }
+
+  .timeline-item:first-child { padding-top: 0; }
+  .timeline-item:last-child { border-bottom: none; }
+
+  .timeline-item:hover {
+    padding-left: 1rem;
+  }
+
+  .timeline-meta {
+    padding-top: 0.25rem;
+  }
+
+  .timeline-date {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+
+  .timeline-location {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+
+  .timeline-content h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-content .company {
+    font-size: 0.9rem;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+
+  .timeline-content p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .edu-card {
+    padding: 2.5rem;
+    border: 1px solid var(--light-line);
+    transition: all 0.3s ease;
+  }
+
+  .edu-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+  }
+
+  .edu-card .degree {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .edu-card .school {
+    font-size: 0.9rem;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+
+  .edu-card .edu-detail {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--ink); color: var(--paper); }
+
+  #contact .section-label { color: var(--accent-light); }
+  #contact .section-title { color: var(--paper); }
+  #contact .divider { background: var(--accent-light); }
+
+  .contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-text {
+    font-size: 1.1rem;
+    color: rgba(248,246,243,0.6);
+    line-height: 1.8;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--paper);
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(248,246,243,0.1);
+    transition: all 0.3s ease;
+  }
+
+  .contact-link:hover {
+    color: var(--accent-light);
+    padding-left: 0.5rem;
+  }
+
+  .contact-link-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(248,246,243,0.35);
+    min-width: 60px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 3rem;
+    background: var(--ink);
+    border-top: 1px solid rgba(248,246,243,0.08);
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(248,246,243,0.3);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 0.8; transform: scaleY(1.2); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 6rem 1.5rem 4rem; }
+    .about-grid,
+    .expertise-grid,
+    .edu-grid,
+    .contact-content { grid-template-columns: 1fr; }
+    .timeline-item {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    .hero-cta { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Marco A. Guzman, Jr.</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#expertise">Expertise</a>
+    <a href="#experience">Experience</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Engineering Leader · Continuous Improvement</div>
+    <h1>Building systems<br>that <span class="highlight">perform.</span></h1>
+    <p class="hero-desc">
+      Chemical engineer and operations leader driving measurable results in food manufacturing through Six Sigma methodology, agile project management, and data-driven decision making.
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Get in Touch ↓</a>
+      <a href="#experience" class="btn-secondary">View Experience</a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-label reveal">About</div>
+    <h2 class="section-title reveal">Engineer by training,<br>leader by practice.</h2>
+    <div class="divider reveal"></div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          I'm a chemical engineer with deep experience in food manufacturing operations. I specialize in leading cross-functional teams through complex improvement initiatives — turning controllable losses into measurable savings.
+        </p>
+        <p>
+          Currently serving as CI/OE Team Leader at Kraft Heinz, I manage yield improvement programs across multi-system production environments. My approach combines Six Sigma rigor with agile execution to deliver results at pace.
+        </p>
+        <p>
+          I'm completing my Master's in Engineering Management at Penn State while actively driving operational excellence on the plant floor — bridging the gap between strategic thinking and hands-on execution.
+        </p>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat">
+          <div class="stat-number">$500K+</div>
+          <div class="stat-label">Savings target on<br>current initiative</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">3.8</div>
+          <div class="stat-label">GPA — M.S. Engineering<br>Management</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">29</div>
+          <div class="stat-label">Production fillers<br>under management</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">$3M</div>
+          <div class="stat-label">Plant relocation<br>project managed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section id="expertise">
+  <div class="section-inner">
+    <div class="section-label reveal">Expertise</div>
+    <h2 class="section-title reveal">Core competencies.</h2>
+    <div class="divider reveal"></div>
+    <div class="expertise-grid reveal">
+
+      <div class="expertise-card">
+        <div class="expertise-number">01</div>
+        <h3>Continuous Improvement</h3>
+        <p>Leading agile CI initiatives from opportunity identification through execution. Specializing in yield improvement and controllable loss reduction in high-volume manufacturing.</p>
+        <div class="expertise-tags">
+          <span class="tag">Six Sigma</span>
+          <span class="tag">Lean</span>
+          <span class="tag">Agile</span>
+          <span class="tag">DMAIC</span>
+        </div>
+      </div>
+
+      <div class="expertise-card">
+        <div class="expertise-number">02</div>
+        <h3>Engineering & Manufacturing</h3>
+        <p>Deep technical knowledge of food manufacturing systems, physical infrastructure, and production optimization across multi-line environments.</p>
+        <div class="expertise-tags">
+          <span class="tag">Food Mfg</span>
+          <span class="tag">Systems</span>
+          <span class="tag">Infrastructure</span>
+          <span class="tag">Scale-up</span>
+        </div>
+      </div>
+
+      <div class="expertise-card">
+        <div class="expertise-number">03</div>
+        <h3>Leadership & Project Management</h3>
+        <p>Cross-functional team leadership, stakeholder management, and executive-level communication. Translating shop floor data into corporate-ready narratives.</p>
+        <div class="expertise-tags">
+          <span class="tag">Agile Sprints</span>
+          <span class="tag">Stakeholders</span>
+          <span class="tag">Strategy</span>
+        </div>
+      </div>
+
+      <div class="expertise-card">
+        <div class="expertise-number">04</div>
+        <h3>Chemical Engineering</h3>
+        <p>Process engineering foundation applied to manufacturing optimization, regulatory compliance, and safety standards across industrial operations.</p>
+        <div class="expertise-tags">
+          <span class="tag">Process</span>
+          <span class="tag">Compliance</span>
+          <span class="tag">Safety</span>
+          <span class="tag">R&D</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-label reveal">Experience</div>
+    <h2 class="section-title reveal">Career trajectory.</h2>
+    <div class="divider reveal"></div>
+    <div class="timeline reveal">
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <div class="timeline-date">Present</div>
+          <div class="timeline-location">Winchester, VA</div>
+        </div>
+        <div class="timeline-content">
+          <h3>CI/OE Team Leader</h3>
+          <div class="company">Kraft Heinz</div>
+          <p>Leading yield improvement initiatives across 5 production systems with 29 fillers. Managing agile sprints targeting $500K+ in annual savings from controllable losses. Driving data accuracy improvements and stakeholder alignment from plant floor to corporate leadership.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <div class="timeline-date">Previous</div>
+          <div class="timeline-location">Washington, DC</div>
+        </div>
+        <div class="timeline-content">
+          <h3>Director-level Operations</h3>
+          <div class="company">The Chlorine Institute</div>
+          <p>Managed regulatory compliance and safety standards at the industry level. Led stakeholder communications and technical documentation for chemical safety programs.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <div class="timeline-date">Previous</div>
+          <div class="timeline-location">Mexico</div>
+        </div>
+        <div class="timeline-content">
+          <h3>Plant Relocation Supervisor</h3>
+          <div class="company">Manufacturing Operations</div>
+          <p>Supervised end-to-end $3M plant relocation project. Managed cross-border logistics, equipment installation, and production line commissioning on time and within budget.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-inner">
+    <div class="section-label reveal">Education & Credentials</div>
+    <h2 class="section-title reveal">Academic foundation.</h2>
+    <div class="divider reveal"></div>
+    <div class="edu-grid reveal">
+      <div class="edu-card">
+        <div class="degree">M.S. Engineering Management</div>
+        <div class="school">Penn State University</div>
+        <div class="edu-detail">GPA: 3.8 · In Progress</div>
+      </div>
+      <div class="edu-card">
+        <div class="degree">B.S. Chemical Engineering</div>
+        <div class="school">University Program</div>
+        <div class="edu-detail">Foundation in process engineering, thermodynamics, and systems design</div>
+      </div>
+      <div class="edu-card">
+        <div class="degree">Six Sigma Green Belt</div>
+        <div class="school">Certified Practitioner</div>
+        <div class="edu-detail">DMAIC methodology · Statistical process control · Root cause analysis</div>
+      </div>
+      <div class="edu-card">
+        <div class="degree">Agile / CI Methodologies</div>
+        <div class="school">Applied Practice</div>
+        <div class="edu-detail">Sprint planning · Stakeholder alignment · KPI-driven execution</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-label reveal">Contact</div>
+    <h2 class="section-title reveal">Let's connect.</h2>
+    <div class="divider reveal"></div>
+    <div class="contact-content reveal">
+      <p class="contact-text">
+        I'm always open to conversations about operational excellence, manufacturing leadership, and engineering management. Whether you're looking to collaborate or just want to exchange ideas — reach out.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:marcoaguzmanjr@gmail.com" class="contact-link">
+          <span class="contact-link-label">Email</span>
+          marcoaguzmanjr@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/marcoaguzmanjr" class="contact-link">
+          <span class="contact-link-label">LinkedIn</span>
+          linkedin.com/in/marcoaguzmanjr
+        </a>
+        <a href="#" class="contact-link">
+          <span class="contact-link-label">Location</span>
+          Greater Washington, D.C. Metropolitan Area
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 Marco A. Guzman, Jr. Built with intention.
+</footer>
+
+<script>
+  // Scroll-based nav shrink
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+</body>
+</html>
