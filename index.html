@@ -364,7 +364,6 @@
     border-color: var(--accent-light);
     color: var(--accent);
   }
-
   /* ── EXPERIENCE ── */
   #experience { background: white; }
 
@@ -571,6 +570,7 @@
     <a href="#about">About</a>
     <a href="#expertise">Expertise</a>
     <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
     <a href="#education">Education</a>
     <a href="#contact">Contact</a>
   </div>
@@ -773,7 +773,107 @@
 </section>
 
 <!-- CONTACT -->
+<style>
+  /* Scoped to #projects; inherits your palette via CSS variables */
+  #projects .project-card {
+    border: 1px solid var(--light-line);
+    background: rgba(255,255,255,0.5);
+    border-radius: 12px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+  }
+  @media (max-width: 860px) {
+    #projects .project-card { grid-template-columns: 1fr; }
+  }
+  #projects .project-body { padding: 2.5rem; }
+  #projects .project-kicker {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  #projects .project-body h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+  #projects .project-body p {
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  #projects .project-shot {
+    background: var(--warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  #projects .project-shot img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 12px 40px rgba(26,26,26,0.18);
+  }
+  #projects .project-links { margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+  #projects .project-links a {
+    font-size: 0.9rem;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-light);
+    padding-bottom: 1px;
+  }
+  #projects .project-links a:hover { color: var(--ink); border-color: var(--ink); }
+</style>
+
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-label reveal">Projects</div>
+    <h2 class="section-title reveal">Where CI meets AI.</h2>
+    <div class="divider reveal"></div>
+
+    <div class="project-card reveal">
+      <div class="project-body">
+        <div class="project-kicker">Python · Claude API · Model Context Protocol</div>
+        <h3>LineSight — AI Copilot for Continuous Improvement</h3>
+        <p>
+          An MCP server that gives an AI assistant the toolkit of a CI engineer:
+          OEE decomposition, downtime Pareto analysis, SPC control charts, and
+          yield-loss economics over live plant data. Ask &ldquo;why is this line
+          slowing down?&rdquo; and it answers with control-chart evidence &mdash;
+          then logs countermeasures to an action register with owners and due dates.
+        </p>
+        <p>
+          The CI rituals ship as reusable commands &mdash; a <em>/dmaic</em>
+          investigation, a <em>/daily_huddle</em> brief, a one-page
+          <em>/a3_report</em> &mdash; and every number traces back to a documented
+          formula. A recommendation you can't audit is a recommendation you
+          can't trust.
+        </p>
+        <div class="expertise-tags">
+          <span class="tag">MCP</span>
+          <span class="tag">LLM Tool Use</span>
+          <span class="tag">SPC / XmR</span>
+          <span class="tag">OEE</span>
+          <span class="tag">DMAIC</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/marcoaguzman/linesight" target="_blank" rel="noopener">View the code &rarr;</a>
+        </div>
+      </div>
+      <div class="project-shot">
+        <img src="assets/linesight-dmaic.png"
+             alt="LineSight running a DMAIC investigation in the terminal: Claude calls OEE, Pareto, and SPC tools over MCP and identifies the root cause with control-chart evidence.">
+      </div>
+    </div>
+
+  </div>
+</section>
 <section id="contact">
+  
   <div class="section-inner">
     <div class="section-label reveal">Contact</div>
     <h2 class="section-title reveal">Let's connect.</h2>
