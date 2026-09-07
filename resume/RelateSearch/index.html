@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Marco A. Guzman, Jr. — Résumé</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#1a1a1a; --paper:#f8f6f3; --accent:#b8562a; --muted:#8a8580; --line:rgba(26,26,26,0.08); }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'DM Sans',sans-serif; background:var(--paper); color:var(--ink); font-weight:300; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:2rem; }
+  .card{ max-width:520px; width:100%; text-align:center; }
+  .name{ font-family:'DM Serif Display',serif; font-size:clamp(1.8rem,5vw,2.6rem); letter-spacing:-0.02em; }
+  .label{ font-size:0.75rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); margin-top:0.75rem; }
+  .prepared{ font-size:1.05rem; color:var(--muted); margin-top:1.5rem; }
+  .prepared b{ color:var(--ink); font-weight:500; }
+  .divider{ width:40px; height:1px; background:var(--accent); margin:2rem auto; }
+  .btn{ display:inline-flex; align-items:center; gap:0.5rem; padding:0.9rem 2rem; background:var(--ink); color:var(--paper); text-decoration:none; font-size:0.9rem; font-weight:500; letter-spacing:0.03em; border-radius:2px; transition:background 0.3s ease; }
+  .btn:hover{ background:var(--accent); }
+  .hint{ font-size:0.85rem; color:var(--muted); margin-top:1.25rem; }
+  .home{ display:inline-block; margin-top:2.5rem; font-size:0.8rem; letter-spacing:0.05em; color:var(--muted); text-decoration:none; }
+  .home:hover{ color:var(--accent); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="name">Marco A. Guzman, Jr.</div>
+    <div class="label">Résumé</div>
+    <p class="prepared">Prepared for <b id="company">Relate Search</b></p>
+    <div class="divider"></div>
+    <a id="dl" class="btn" href="#">Download résumé (PDF)</a>
+    <p class="hint">Your download should begin automatically. If it does not, use the button above.</p>
+    <a class="home" href="https://marcoaguzmanjr.com">← marcoaguzmanjr.com</a>
+  </div>
+
+<script>
+  /* ===== Edit these three lines for each company ===== */
+  const COMPANY       = "Relate Search";
+  const PDF_PATH      = "/resume/marco-a-guzman-jr-resume.pdf";
+  const DOWNLOAD_NAME = "Marco A. Guzman Jr - Resume.pdf";
+  /* ================================================== */
+
+  document.getElementById("company").textContent = COMPANY;
+  const dl = document.getElementById("dl");
+  dl.href = PDF_PATH;
+  dl.setAttribute("download", DOWNLOAD_NAME);
+
+  // Try to start the download automatically (same-origin file).
+  window.addEventListener("load", function(){
+    setTimeout(function(){
+      const a = document.createElement("a");
+      a.href = PDF_PATH;
+      a.setAttribute("download", DOWNLOAD_NAME);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }, 400);
+  });
+</script>
+</body>
+</html>
